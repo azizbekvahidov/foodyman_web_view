@@ -446,13 +446,6 @@ export interface Referral {
   price_to: number;
 }
 
-export interface Career {
-  id: number;
-  title: string;
-  category: string;
-  location: string;
-}
-
 export interface IShopTag {
   id: number;
   img?: string;
@@ -510,4 +503,14 @@ export interface SuccessResponse<T> {
 export interface IPrivacy {
   id: number;
   translation: Translation;
+}
+
+export interface IPage {
+  id: number;
+  img?: string;
+  translation?: Translation;
+  buttons?: {
+    app_store_button_link: string;
+    google_play_button_link: string;
+  };
 }

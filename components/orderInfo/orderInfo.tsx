@@ -84,7 +84,7 @@ export default function OrderInfo({ data }: Props) {
     });
 
   function repeatOrder() {
-    if (!checkIsAbleToAddProduct) {
+    if (!checkIsAbleToAddProduct()) {
       mutateClearCart({ ids: [cart.id] });
       return;
     }

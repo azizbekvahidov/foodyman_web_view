@@ -7,8 +7,12 @@ import Layout from "containers/layout/layout";
 import { ToastContainer } from "react-toastify";
 import { Router, useRouter } from "next/router";
 import { getCookie } from "utils/session";
+import MainContainer from "containers/main/mainContainer";
 import ThemeProvider from "contexts/theme/theme.provider";
-import createEmotionCache from "utils/createEmotionCache";
+import {
+  createEmotionCache,
+  createRtlEmotionCache,
+} from "utils/createEmotionCache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import MuiThemeProvider from "contexts/muiTheme/muiTheme.provider";
 import { useDeviceType } from "utils/useDeviceType";
@@ -35,6 +39,7 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 const clientSideEmotionCache = createEmotionCache();
+const clientSideRtlEmotionCache = createRtlEmotionCache();
 const pagesWithoutLayout = [
   "register",
   "login",
@@ -42,6 +47,7 @@ const pagesWithoutLayout = [
   "verify-phone",
   "update-password",
   "update-details",
+  "welcome",
 ];
 
 interface MyAppProps extends AppProps {
@@ -61,7 +67,7 @@ export default function ExtendedApp({
   pageProps,
   userAgent,
   appTheme,
-  emotionCache = clientSideEmotionCache,
+  emotionCache,
   authState,
   settingsState,
   defaultAddress,
@@ -73,6 +79,8 @@ export default function ExtendedApp({
   const isAuthPage = pagesWithoutLayout.some((item) => pathname.includes(item));
   const deviceType = useDeviceType(userAgent);
   const [queryClient] = useState(() => new QueryClient(config));
+  const csEmotionCache =
+    appDirection === "rtl" ? clientSideRtlEmotionCache : clientSideEmotionCache;
 
   useEffect(() => {
     i18n.changeLanguage(locale);
@@ -81,7 +89,7 @@ export default function ExtendedApp({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <CacheProvider value={emotionCache}>
+        <CacheProvider value={emotionCache || csEmotionCache}>
           <MuiThemeProvider deviceType={deviceType}>
             <ThemeProvider appTheme={appTheme} appDirection={appDirection}>
               <Provider store={store}>
@@ -91,11 +99,13 @@ export default function ExtendedApp({
                 >
                   <AuthProvider authState={authState}>
                     {isAuthPage ? (
-                      <Component {...pageProps} />
+                      <MainContainer locale={locale}>
+                        <Component {...pageProps} />
+                      </MainContainer>
                     ) : (
                       <PersistGate loading={null} persistor={persistor}>
                         {() => (
-                          <Layout>
+                          <Layout locale={locale}>
                             <Component {...pageProps} />
                           </Layout>
                         )}

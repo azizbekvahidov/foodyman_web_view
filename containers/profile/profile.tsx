@@ -22,6 +22,7 @@ import Datepicker from "components/inputs/datepicker";
 import dayjs from "dayjs";
 import { useAuth } from "contexts/auth/auth.context";
 import FallbackImage from "components/fallbackImage/fallbackImage";
+import PhoneInputWithVerification from "components/inputs/phoneInputWithVerification";
 
 const ModalContainer = dynamic(() => import("containers/modal/modal"));
 const MobileDrawer = dynamic(() => import("containers/drawer/mobileDrawer"));
@@ -77,7 +78,7 @@ export default function ProfileContainer({ data }: Props) {
         lastname: values.lastname,
         birthday: values.birthday,
         gender: values.gender,
-        images: [values.img],
+        images: values.img ? [values.img] : undefined,
       };
       updateProfile(body);
     },
@@ -184,7 +185,7 @@ export default function ProfileContainer({ data }: Props) {
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <TextInput
+                  <PhoneInputWithVerification
                     name="phone"
                     label={t("phone")}
                     placeholder={t("type.here")}

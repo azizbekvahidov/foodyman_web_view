@@ -6,6 +6,8 @@ const blogService = {
     request.get(`/rest/blogs/paginate?type=blog`, { params }),
   getById: (id: string, params?: any): Promise<SuccessResponse<IBlog>> =>
     request.get(`/rest/blogs/${id}`, { params }),
+  getLastBlog: (params?: any): Promise<SuccessResponse<IBlog>> =>
+    request.get(`rest/last-blog/show`, { params }),
 };
 
 export default blogService;

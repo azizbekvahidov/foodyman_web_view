@@ -1,7 +1,7 @@
 import axios from "axios";
 import { MAP_API_KEY } from "constants/constants";
 
-export async function getAddressFromLocation(latlng: string) {
+export async function getAddressFromLocation(latlng?: string) {
   let params = { latlng, key: MAP_API_KEY };
 
   return axios

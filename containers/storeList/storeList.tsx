@@ -5,8 +5,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Skeleton } from "@mui/material";
 import StoreCard from "components/storeCard/storeCard";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
 import ArrowRightSLineIcon from "remixicon-react/ArrowRightSLineIcon";
+import ArrowLeftSLineIcon from "remixicon-react/ArrowLeftSLineIcon";
+import useLocale from "hooks/useLocale";
+import { useTheme } from "contexts/theme/theme.context";
 
 const settings = {
   spaceBetween: 10,
@@ -27,7 +29,8 @@ type Props = {
 };
 
 export default function StoreList({ title, shops, loading }: Props) {
-  const { t } = useTranslation();
+  const { t } = useLocale();
+  const { direction } = useTheme();
 
   return (
     <section
@@ -41,7 +44,11 @@ export default function StoreList({ title, shops, loading }: Props) {
           <h2 className={cls.title}>{title}</h2>
           <Link href="/shop" className={cls.link}>
             <span className={cls.text}>{t("see.all")}</span>
-            <ArrowRightSLineIcon />
+            {direction === "rtl" ? (
+              <ArrowLeftSLineIcon />
+            ) : (
+              <ArrowRightSLineIcon />
+            )}
           </Link>
         </div>
         {!loading ? (

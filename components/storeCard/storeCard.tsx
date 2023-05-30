@@ -2,18 +2,19 @@ import React from "react";
 import { IShop } from "interfaces";
 import cls from "./storeCard.module.scss";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
 import getImage from "utils/getImage";
 import BonusCaption from "components/bonusCaption/bonusCaption";
 import TaxiFillIcon from "remixicon-react/TaxiFillIcon";
 import FallbackImage from "components/fallbackImage/fallbackImage";
+import getShortTimeType from "utils/getShortTimeType";
+import useLocale from "hooks/useLocale";
 
 type Props = {
   data: IShop;
 };
 
 export default function StoreCard({ data }: Props) {
-  const { t } = useTranslation();
+  const { t } = useLocale();
 
   return (
     <Link href={`/shop/${data.id}`} className={cls.wrapper}>
@@ -27,9 +28,8 @@ export default function StoreCard({ data }: Props) {
         <div className={cls.badge}>
           <TaxiFillIcon />
           <span className={cls.text}>
-            {t("delivery.range", {
-              times: `${data.delivery_time?.from}-${data.delivery_time?.to}`,
-            })}
+            {data.delivery_time?.from}-{data.delivery_time?.to}{" "}
+            {t(getShortTimeType(data.delivery_time?.type))}
           </span>
         </div>
       </div>

@@ -1,21 +1,21 @@
 .container {
   min-height: 51vh;
   background-color: var(--secondary-bg);
-  &.bgGrey {
+  &:nth-child(odd) {
     background-color: var(--primary-bg);
+  }
+  &:nth-child(even) .wrapper {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    @media (max-width: 576px) {
+      flex-direction: column;
+    }
   }
   .wrapper {
     display: flex;
     justify-content: flex-start;
     gap: 30px;
     padding: 50px 0;
-    &.reverse {
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-      @media (max-width: 576px) {
-        flex-direction: column;
-      }
-    }
     @media (max-width: 576px) {
       flex-direction: column;
       gap: 20px;

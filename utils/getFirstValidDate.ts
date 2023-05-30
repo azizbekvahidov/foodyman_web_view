@@ -10,7 +10,10 @@ function getSchedule(day: Dayjs, data: IShop) {
 }
 
 export default function getFirstValidDate(data: IShop) {
-  const estimatedDeliveryDuration = Number(data?.delivery_time?.to);
+  let estimatedDeliveryDuration = Number(data?.delivery_time?.to);
+  if (data?.delivery_time?.type === "hour") {
+    estimatedDeliveryDuration = estimatedDeliveryDuration * 60;
+  }
   let date: string = "";
   let time: string = "";
   for (let index = 0; index < 7; index++) {
@@ -19,7 +22,7 @@ export default function getFirstValidDate(data: IShop) {
       date = dayjs().add(index, "day").format("YYYY-MM-DD");
       if (isToday) {
         time = roundedDeliveryTime(
-          dayjs().add(index, "day").add(estimatedDeliveryDuration, "minute"),
+          dayjs().add(index, "day"),
           estimatedDeliveryDuration
         );
       } else {

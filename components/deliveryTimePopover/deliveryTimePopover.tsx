@@ -6,14 +6,16 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { FormikProps } from "formik";
 import { OrderFormValues } from "interfaces";
-import dayjs from "dayjs";
+import dayjs, { ManipulateType } from "dayjs";
 import roundedDeliveryTime from "utils/roundedDeliveryTime";
+import getShortTimeType from "utils/getShortTimeType";
 
 interface Props extends PopoverProps {
   weekDay: string;
   time: string;
   handleOpenDrawer: () => void;
   formik?: FormikProps<OrderFormValues>;
+  timeType: string;
 }
 
 export default function DeliveryTimePopover({
@@ -21,6 +23,7 @@ export default function DeliveryTimePopover({
   time,
   handleOpenDrawer,
   formik,
+  timeType,
   ...rest
 }: Props) {
   const { t } = useTranslation();
@@ -32,8 +35,9 @@ export default function DeliveryTimePopover({
 
   const handleSelectStandartTime = (event: any) => {
     const estimatedDeliveryDuration = Number(time);
+    const type: ManipulateType = timeType as ManipulateType;
     const standardTime = roundedDeliveryTime(
-      dayjs().add(estimatedDeliveryDuration, "minute"),
+      dayjs().add(estimatedDeliveryDuration, type),
       estimatedDeliveryDuration
     );
     const standardDate = dayjs().format("YYYY-MM-DD");
@@ -51,7 +55,7 @@ export default function DeliveryTimePopover({
       <div className={cls.wrapper}>
         <Link href="/" className={cls.link} onClick={handleSelectStandartTime}>
           <span className={cls.text}>
-            {t("today")} — {time} {t("min")}
+            {t("today")} — {time} <span>{t(getShortTimeType(timeType))}</span>
           </span>
         </Link>
         <Link

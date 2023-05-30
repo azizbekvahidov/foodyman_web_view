@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 export type ThemeType = "light" | "dark";
 export type DirType = "ltr" | "rtl";
@@ -14,3 +14,5 @@ type ThemeContextType = {
 export const ThemeContext = createContext<ThemeContextType>(
   {} as ThemeContextType
 );
+
+export const useTheme = () => useContext(ThemeContext);

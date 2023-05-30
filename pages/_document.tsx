@@ -7,8 +7,12 @@ import Document, {
   DocumentContext,
 } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import createEmotionCache from "utils/createEmotionCache";
+import {
+  createEmotionCache,
+  createRtlEmotionCache,
+} from "utils/createEmotionCache";
 import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
+import { getCookie } from "utils/session";
 
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: EmotionJSX.Element[];
@@ -31,7 +35,9 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
   const originalRenderPage = ctx.renderPage;
-  const cache = createEmotionCache();
+  const appDirection = getCookie("dir", ctx);
+  const cache =
+    appDirection === "rtl" ? createRtlEmotionCache() : createEmotionCache();
   const { extractCriticalToChunks } = createEmotionServer(cache);
 
   ctx.renderPage = () =>

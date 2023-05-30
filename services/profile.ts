@@ -15,6 +15,8 @@ const profileService = {
     request.post(`/dashboard/user/update/notifications`, data),
   firebaseTokenUpdate: (data: any) =>
     request.post(`/dashboard/user/profile/firebase/token/update`, data),
+  updatePhone: (params: any): Promise<SuccessResponse<IUser>> =>
+    request.put(`/dashboard/user/profile/update`, {}, { params }),
 };
 
 export default profileService;

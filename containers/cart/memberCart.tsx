@@ -45,7 +45,9 @@ export default function MemberCart({ shop }: Props) {
       onError: () => {
         dispatch(clearUserCart());
         clearMember();
-        warning(t("you.kicked.from.group"));
+        warning(t("you.kicked.from.group"), {
+          toastId: "group_order_finished",
+        });
       },
       enabled: !!member?.cart_id,
       retry: false,

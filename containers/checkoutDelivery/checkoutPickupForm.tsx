@@ -68,8 +68,8 @@ export default function CheckoutPickupForm({ formik, data }: Props) {
       branchService.getAll({ shop_id: data?.id, page: pageParam, perPage: 10 }),
     {
       getNextPageParam: (lastPage: any) => {
-        if (lastPage.meta.current_page < lastPage.meta.last_page) {
-          return lastPage.meta.current_page + 1;
+        if (lastPage.meta?.current_page < lastPage.meta?.last_page) {
+          return lastPage.meta?.current_page + 1;
         }
         return undefined;
       },
@@ -155,6 +155,7 @@ export default function CheckoutPickupForm({ formik, data }: Props) {
         time={data?.delivery_time?.to || "0"}
         handleOpenDrawer={handleOpenTimeDrawer}
         formik={formik}
+        timeType={data.delivery_time?.type || "minute"}
       />
       {isDesktop ? (
         <ModalContainer open={timeDrawer} onClose={handleCloseTimeDrawer}>

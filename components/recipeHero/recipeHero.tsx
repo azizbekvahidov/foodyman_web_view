@@ -14,7 +14,7 @@ export default function RecipeHero({ data }: Props) {
       <h2>{data?.translation?.title}</h2>
       <div className={cls.hero}>
         <div className={cls.heroWrapper}>
-          <FallbackImage src={data?.img} alt={data?.translation?.title} />
+          <FallbackImage src={data?.bg_img} alt={data?.translation?.title} />
         </div>
         <div className={cls.card}>
           <div className={cls.cardWrapper}>

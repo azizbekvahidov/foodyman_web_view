@@ -22,6 +22,7 @@ export interface IRecipe {
   instruction?: Instruction;
   nutritions?: Nutrition[];
   stocks?: RecipeStock[];
+  bg_img?: string;
 }
 
 export interface Nutrition {

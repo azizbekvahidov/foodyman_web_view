@@ -5,18 +5,19 @@ import Link from "next/link";
 import ShopLogo from "components/shopLogo/shopLogo";
 import RunFillIcon from "remixicon-react/RunFillIcon";
 import StarSmileFillIcon from "remixicon-react/StarSmileFillIcon";
-import { useTranslation } from "react-i18next";
 import getImage from "utils/getImage";
 import BonusCaption from "components/bonusCaption/bonusCaption";
 import ShopBadges from "containers/shopBadges/shopBadges";
 import FallbackImage from "components/fallbackImage/fallbackImage";
+import useLocale from "hooks/useLocale";
+import getShortTimeType from "utils/getShortTimeType";
 
 type Props = {
   data: IShop;
 };
 
 export default function ShopCard({ data }: Props) {
-  const { t } = useTranslation();
+  const { t } = useLocale();
 
   return (
     <Link
@@ -51,9 +52,8 @@ export default function ShopCard({ data }: Props) {
           <span className={cls.greenDot} />
           <RunFillIcon />
           <span className={cls.text}>
-            {t("delivery.range", {
-              times: `${data.delivery_time?.from}-${data.delivery_time?.to}`,
-            })}
+            {data.delivery_time?.from}-{data.delivery_time?.to}{" "}
+            {t(getShortTimeType(data.delivery_time?.type))}
           </span>
         </div>
         <span className={cls.dot} />

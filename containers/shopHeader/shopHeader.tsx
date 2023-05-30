@@ -5,7 +5,6 @@ import TimeLineIcon from "remixicon-react/TimeLineIcon";
 import RunFillIcon from "remixicon-react/RunFillIcon";
 import StarSmileFillIcon from "remixicon-react/StarSmileFillIcon";
 import CouponLineIcon from "remixicon-react/CouponLineIcon";
-import { useTranslation } from "react-i18next";
 import ShopLogoBackground from "components/shopLogoBackground/shopLogoBackground";
 import { useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
@@ -22,6 +21,8 @@ import { useRouter } from "next/router";
 import useShopWorkingSchedule from "hooks/useShopWorkingSchedule";
 import { selectCurrency } from "redux/slices/currency";
 import { useSettings } from "contexts/settings/settings.context";
+import getShortTimeType from "utils/getShortTimeType";
+import useLocale from "hooks/useLocale";
 
 const JoinGroupContainer = dynamic(
   () => import("containers/joinGroupContainer/joinGroupContainer")
@@ -42,7 +43,7 @@ type Props = {
 };
 
 export default function ShopHeader({ data }: Props) {
-  const { t } = useTranslation();
+  const { t } = useLocale();
   const isDesktop = useMediaQuery("(min-width:1140px)");
   const dispatch = useAppDispatch();
   const favoriteRestaurants = useAppSelector(selectLikedRestaurants);
@@ -139,9 +140,8 @@ export default function ShopHeader({ data }: Props) {
               <p className={cls.text}>
                 <span></span>
                 <span className={cls.semiBold}>
-                  {t("delivery.range", {
-                    times: `${data?.delivery_time?.from}-${data?.delivery_time?.to}`,
-                  })}
+                  {data?.delivery_time?.from}-{data?.delivery_time?.to}{" "}
+                  {t(getShortTimeType(data?.delivery_time?.type))}
                 </span>
               </p>
             </div>

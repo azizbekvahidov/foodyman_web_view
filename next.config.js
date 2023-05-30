@@ -23,6 +23,7 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  distDir: "_next",
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

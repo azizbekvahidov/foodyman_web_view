@@ -12,6 +12,8 @@ import storyService from "services/story";
 import bannerService from "services/banner";
 import useUserLocation from "hooks/useUserLocation";
 import qs from "qs";
+import { GetServerSideProps } from "next";
+import { getCookie } from "utils/session";
 
 const Empty = dynamic(() => import("components/empty/empty"));
 const Loader = dynamic(() => import("components/loader/loader"));
@@ -185,3 +187,21 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const settings = getCookie("settings", ctx);
+  const address = settings?.address;
+
+  if (!address) {
+    return {
+      redirect: {
+        destination: "/welcome",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

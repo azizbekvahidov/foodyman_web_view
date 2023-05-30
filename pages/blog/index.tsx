@@ -25,6 +25,7 @@ export default function BlogPage({}: Props) {
         blogService.getAll({
           page: pageParam,
           perPage: PER_PAGE,
+          active: 1,
         }),
       {
         staleTime: 0,
@@ -73,7 +74,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const locale = getLanguage(getCookie("locale", ctx));
 
   await queryClient.prefetchInfiniteQuery(["blogs", locale], () =>
-    blogService.getAll({ perPage: PER_PAGE })
+    blogService.getAll({ perPage: PER_PAGE, active: 1 })
   );
 
   return {

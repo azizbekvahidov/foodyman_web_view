@@ -1,25 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import cls from "./beDelivery.module.scss";
-import Image from "next/image";
-import { useTranslation } from "react-i18next";
 import { useSettings } from "contexts/settings/settings.context";
+import { IPage } from "interfaces";
+import FallbackImage from "components/fallbackImage/fallbackImage";
 
-type Props = {};
+type Props = {
+  data?: IPage;
+};
 
-export default function BeDelivery({}: Props) {
-  const { t } = useTranslation();
+export default function BeDelivery({ data }: Props) {
   const { settings } = useSettings();
 
   return (
     <div className={`container ${cls.container}`}>
       <div className={cls.wrapper}>
         <div className={cls.content}>
-          <h1 className={cls.title}>Looking for delivery driver jobs?</h1>
-          <p className={cls.text}>{t("become.delivery.text")}</p>
-          <p className={`${cls.text} ${cls.bold}`}>
-            Get invitation link from restaurant in order to be delivery.
-          </p>
+          <h1 className={cls.title}>{data?.translation?.title}</h1>
+          <div
+            className={cls.text}
+            dangerouslySetInnerHTML={{
+              __html: data?.translation?.description || "",
+            }}
+          />
           <div className={cls.flex}>
             <a
               href={settings?.delivery_app_ios}
@@ -40,10 +43,10 @@ export default function BeDelivery({}: Props) {
           </div>
         </div>
         <div className={cls.imgWrapper}>
-          <Image
+          <FallbackImage
             fill
-            src={"/images/welcome.jpg"}
-            alt={"Foodyman"}
+            src={data?.img}
+            alt={data?.translation?.title}
             sizes="(max-width: 768px) 600px, 1072px"
           />
         </div>

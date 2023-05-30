@@ -182,3 +182,16 @@
     cursor: default;
   }
 }
+
+[dir="rtl"] {
+  .flex {
+    .shopInfo {
+      .delivery {
+        .badge {
+          left: auto;
+          right: 0;
+        }
+      }
+    }
+  }
+}

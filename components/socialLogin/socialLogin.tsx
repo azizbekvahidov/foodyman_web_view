@@ -41,9 +41,9 @@ export default function SocialLogin({}: Props) {
           .catch((err) => error(err?.data?.message))
           .finally(() => nProgress.done());
       });
-    } catch (error) {
-      error(error.message);
-      console.log(error.message);
+    } catch (err) {
+      error(err.message);
+      console.log(err.message);
     }
   };
 
@@ -69,9 +69,9 @@ export default function SocialLogin({}: Props) {
           .catch((err) => error(err?.data?.message))
           .finally(() => nProgress.done());
       });
-    } catch (error) {
-      error(error.message);
-      console.log(error.message);
+    } catch (err) {
+      error(err.message);
+      console.log(err.message);
     }
   };
 
@@ -98,9 +98,9 @@ export default function SocialLogin({}: Props) {
           .catch((err) => error(err?.data?.message))
           .finally(() => nProgress.done());
       });
-    } catch (error) {
-      error(error.message);
-      console.log(error.message);
+    } catch (err) {
+      error(err.message);
+      console.log(err.message);
     }
   };
 

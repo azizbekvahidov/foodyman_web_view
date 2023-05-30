@@ -24,12 +24,16 @@ export default function AppDrawer({ open, handleClose }: Props) {
   const { t } = useTranslation();
   const { push } = useRouter();
   const isMobile = useMediaQuery("(max-width:1139px)");
-  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+  const { isDarkMode, toggleDarkMode, direction } = useContext(ThemeContext);
   const { isAuthenticated } = useAuth();
   const { settings } = useSettings();
 
   return (
-    <DrawerContainer anchor="left" open={open} onClose={handleClose}>
+    <DrawerContainer
+      anchor={direction === "rtl" ? "right" : "left"}
+      open={open}
+      onClose={handleClose}
+    >
       <button className={cls.iconBtn} onClick={toggleDarkMode}>
         {isDarkMode ? <MoonFillIcon /> : <SunFillIcon />}
       </button>

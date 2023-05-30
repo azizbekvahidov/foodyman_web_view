@@ -20,8 +20,8 @@ import { useSettings } from "contexts/settings/settings.context";
 import ErrorBoundary from "containers/errorBoundary/errorBoundary";
 import { ThemeContext } from "contexts/theme/theme.context";
 import Footer from "./footer/footer";
-import { useTranslation } from "react-i18next";
 import translationService from "services/translations";
+import useLocale from "hooks/useLocale";
 
 const PushNotification = dynamic(
   () => import("containers/pushNotification/pushNotification")
@@ -29,6 +29,7 @@ const PushNotification = dynamic(
 
 type LayoutProps = {
   children: any;
+  locale: string;
 };
 
 const profileRoutes = [
@@ -40,10 +41,9 @@ const profileRoutes = [
   "be-seller",
 ];
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, locale }: LayoutProps) {
   const { pathname } = useRouter();
-  const { i18n } = useTranslation();
-  const locale = i18n.language;
+  const { addResourceBundle } = useLocale();
   const isProfileRoute = profileRoutes.find((item) => pathname.includes(item));
   const isDesktop = useMediaQuery("(min-width:1140px)");
   const dispatch = useAppDispatch();
@@ -57,8 +57,9 @@ export default function Layout({ children }: LayoutProps) {
     ["translation", locale],
     () => translationService.getAll({ lang: locale }),
     {
+      enabled: !!locale,
       onSuccess: (data) => {
-        i18n.addResourceBundle(locale, "translation", data.data);
+        addResourceBundle(locale, "translation", data.data);
       },
     }
   );

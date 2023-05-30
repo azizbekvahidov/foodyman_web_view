@@ -17,3 +17,10 @@
     height: 24px;
   }
 }
+
+[dir="rtl"] {
+  .closeBtn {
+    right: auto;
+    left: 20px;
+  }
+}

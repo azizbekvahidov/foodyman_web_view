@@ -324,3 +324,13 @@
     max-width: 100%;
   }
 }
+
+[dir="rtl"] {
+  .chat-drawer {
+    .header {
+      .title {
+        text-align: left;
+      }
+    }
+  }
+}
