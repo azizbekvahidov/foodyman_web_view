@@ -4,6 +4,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 const nextConfig = {
   reactStrictMode: false,
+  port: process.env.PORT || 4000,
   swcMinify: true,
   typescript: {
     ignoreBuildErrors: false,
