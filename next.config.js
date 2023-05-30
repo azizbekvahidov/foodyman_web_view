@@ -5,7 +5,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const nextConfig = {
   serverRuntimeConfig: {
     // Set your desired port number here
-    port: process.env.PORT || 4000,
+    port: parseInt(process.env.PORT, 10) || 3000,
   },
   reactStrictMode: false,
   swcMinify: true,
