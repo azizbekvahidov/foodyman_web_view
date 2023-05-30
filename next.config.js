@@ -3,8 +3,11 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 const nextConfig = {
+  serverRuntimeConfig: {
+    // Set your desired port number here
+    port: process.env.PORT || 4000,
+  },
   reactStrictMode: false,
-  port: process.env.PORT || 4000,
   swcMinify: true,
   typescript: {
     ignoreBuildErrors: false,
